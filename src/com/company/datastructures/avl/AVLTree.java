@@ -1,4 +1,4 @@
-package com.company.datastructures.bst.avl;
+package com.company.datastructures.avl;
 
 public class AVLTree {
     private Node root;
@@ -96,14 +96,41 @@ public class AVLTree {
         return node.height;
     }
 
-    public boolean contains(Node node) {
+    public boolean contains(int data) {
+        return contains(data, root);
+    }
 
-        return false;
+    private boolean contains(int data, Node node) {
+        if (node == null) {
+            return false;
+        }
+        if (node.data == data) {
+            return true;
+        }
+        if (data < node.data) {
+            return contains(data, node.left);
+        }
+
+        return contains(data, node.right);
     }
 
     public Node delete(int data) {
 
         return null;
+    }
+
+    public void printPreOrder() {
+        printPreOrder(root);
+    }
+
+    // print in sorted order
+    private void printPreOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+        printPreOrder(node.left);
+        System.out.print(node.data + " ");
+        printPreOrder(node.right);
     }
 
     private class Node {

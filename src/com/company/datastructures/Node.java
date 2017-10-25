@@ -1,4 +1,4 @@
-package com.company.datastructures.bst;
+package com.company.datastructures;
 
 public class Node {
     private int data;
