@@ -1,5 +1,8 @@
 package com.company.datastructures.avl;
 
+import java.util.HashMap;
+import java.util.Hashtable;
+
 public class AVLTree {
     private Node root;
 

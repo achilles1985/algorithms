@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class Heap {
     private int capacity = 16;
     private int size = 0;
+    private String name;
 
     private int[] array = new int[capacity];
 
@@ -109,5 +110,26 @@ public class Heap {
         heap.peak();
         heap.peak();
         heap.printHeap();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Heap heap = (Heap) o;
+
+        if (capacity != heap.capacity) return false;
+        if (size != heap.size) return false;
+        return name != null ? name.equals(heap.name) : heap.name == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = capacity;
+        result = 31 * result + size;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 }
