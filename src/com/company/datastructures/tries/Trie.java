@@ -2,8 +2,7 @@ package com.company.datastructures.tries;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.String.valueOf;
+import java.util.Stack;
 
 public class Trie {
 
@@ -14,17 +13,25 @@ public class Trie {
 
         private Node[] children = new Node[ALPHABET_CHARS];
         private boolean isEndOfWord;
+        private boolean visited;
+        private Node parent;
+        private char data;
     }
 
     public void add(String word) {
         Node current = root;
         int i;
         for (i = 0; i < word.length(); i++) {
-            int index = word.charAt(i) - 'a';
+            char character = word.charAt(i);
+            int index = character - 'a';
             if (current.children[index] == null) {
-                current.children[index] = new Node();
+                Node node = new Node();
+                node.parent = current;
+                node.data = character;
+                current.children[index] = node;
             }
             current = current.children[index];
+            current.isEndOfWord = false;
         }
         current.isEndOfWord = true;
     }
@@ -44,6 +51,31 @@ public class Trie {
     }
 
     public List<String> findAll(String prefix) {
+        List<String> result = new ArrayList<>();
+
+        Node current = getLastPrefixNode(prefix);
+        Stack<Node> stack = new Stack<>();
+        current.visited = true;
+        stack.push(current);
+        while(!stack.isEmpty()) {
+            Node node = stack.pop();
+            if (node.isEndOfWord) {
+                String word = buildWord(node);
+                result.add(word);
+            }
+            for (Node child: node.children) {
+                if (child != null && !child.visited) {
+                    child.visited = true;
+                    child.parent = node;
+                    stack.push(child);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private Node getLastPrefixNode(String prefix) {
         Node current = root;
         for (int i = 0; i < prefix.length(); i++) {
             int index = prefix.charAt(i) - 'a';
@@ -53,41 +85,16 @@ public class Trie {
             current = current.children[index];
         }
 
-        Node[] children = current.children;
-        List<String> result = new ArrayList<>();
-        for (int i = 0; i < children.length; i++) {
-            Node node = children[i];
-            if (node != null) {
-                String word = buildWord(node, i);
-                result.add(word);
-/*                StringBuilder builder = new StringBuilder();
-                while(node != null && !node.isEndOfWord) {
-                    int code = i + 'a';
-                    builder.append((char) code);
-                    node = node.children[i];
-                }
-                result.add(builder.toString());*/
-            }
+        return current;
+    }
+
+    private String buildWord(Node node) {
+        StringBuilder word = new StringBuilder();
+        while (node.parent != null) {
+            word.append(String.valueOf(node.data));
+            node = node.parent;
         }
-
-        return result;
-    }
-
-    private String buildWord(Node node, int index) {
-        return buildWord(node, index, "");
-    }
-
-    private String buildWord(Node node, int index, String word) {
-        if (node == null || node.isEndOfWord) {
-            return word;
-        }
-
-        int code = index + 'a';
-        return buildWord(node.children[index], index, word + valueOf((char) code));
-    }
-
-    public void print() {
-
+        return word.reverse().toString();
     }
 
     public static void main(String[] args) {
@@ -99,11 +106,13 @@ public class Trie {
         trie.add("tompson");
         trie.add("terry");
         trie.add("adam");
+        trie.add("adamsom");
         trie.add("amanda");
 
-        System.out.println(trie.exists("aman"));
+        System.out.println(trie.exists("amanda"));
+
         String prefix = "tom";
-        List<String> result = trie.findAll("tom");
-        System.out.println(String.format("Found for prefix %s: ", prefix, result));
+        List<String> result = trie.findAll(prefix);
+        System.out.println(String.format("Found for prefix %s: %s", prefix, result));
     }
 }

@@ -1,4 +1,4 @@
-package com.company.datastructures.stringsmatching;
+package com.company.strings.stringsmatching;
 
 public class RabinKarpApproach {
 

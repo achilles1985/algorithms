@@ -7,9 +7,9 @@ public class BalancedParentheses {
     public static void main(String[] args) {
         String balanced = "()(())";
         String unbalanced = "(()((((()";
-        String balanced2 = ")([{}({)}[{}}()]";
+        String unbalanced2 = ")([{}({)}[{}}()]";
 
-        System.out.println(isBalanced(balanced2));
+        System.out.println(isBalanced(unbalanced2));
     }
 
     public static boolean isBalanced(String input) {
