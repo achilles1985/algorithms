@@ -1,4 +1,4 @@
-package com.company.tricks;
+package com.company.strings;
 
 import java.util.Stack;
 

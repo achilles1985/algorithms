@@ -8,7 +8,7 @@ public class Fibonacci {
         int[] cache = new int[100];
         Arrays.fill(cache, -1);
 
-        int number = 40;
+        int number = 4;
         long start = System.currentTimeMillis();
         int result = fibonacciDynamic(number, cache);
         //int result = fibonacci(number);
@@ -28,7 +28,7 @@ public class Fibonacci {
     public static int fibonacciDynamic(int number, int[] cache) {
         if (cache[number] == -1) {
             if (number <= 1) {
-                return cache[number];
+                return 1;
             } else {
                 cache[number] = fibonacci(number - 1) + fibonacci(number - 2);
             }

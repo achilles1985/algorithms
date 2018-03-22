@@ -1,4 +1,4 @@
-package com.company.tricks;
+package com.company.strings;
 
 public class Anagram {
     private static final int NUMBER_OF_LETTERS = 26;

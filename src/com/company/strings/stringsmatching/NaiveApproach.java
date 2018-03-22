@@ -4,7 +4,7 @@ public class NaiveApproach {
 
     public static void main(String[] args) {
         String text = "abcaabdfdcbaab";
-        String pattern = "c";
+        String pattern = "aab";
 
         System.out.println(matches2(pattern, text));
     }
